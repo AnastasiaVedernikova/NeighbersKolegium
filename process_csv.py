@@ -164,8 +164,10 @@ def AverageLevelOfSatisfying():
     data['Середня оцінка задоволення сусідом'] = general_levels_of_satisfying
 
 AverageLevelOfSatisfying()
-#print(data)
-print(data.head())
+print(data)
+data.to_csv(r'D:\MachineLearning\ProcessedKolegium.csv')
+
+#print(data.head())
 
 
 
