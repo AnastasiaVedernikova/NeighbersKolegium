@@ -1,8 +1,9 @@
-from sklearn import linear_model
+from sklearn.linear_model import LinearRegression
 import numpy as np
 import pandas as pd
 import sklearn
 import matplotlib.pyplot as plt
+from sklearn.cross_validation import train_test_split
 
 #reading csv
 data = pd.read_csv("ProcessedKolegium.csv")
@@ -13,7 +14,7 @@ data = data.drop('Середня оцінка задоволення сусід�
 x = data.values #shape - 67,197
 
 #deviding for train and test data
-x_train, x_test, y_train, y_test = sklearn.cross_validation.train_test_split(x, y, test_size=0.33, random_state=5)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=5)
 
 # print(x_train.shape)
 # print(x_test.shape)
@@ -21,7 +22,7 @@ x_train, x_test, y_train, y_test = sklearn.cross_validation.train_test_split(x, 
 # print(y_test.shape)
 
 #building regression
-regr = linear_model.LinearRegression()
+regr = LinearRegression()
 regr.fit(x_train, y_train)
 
 #coeficients
