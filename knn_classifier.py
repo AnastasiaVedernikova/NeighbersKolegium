@@ -16,7 +16,7 @@ data = data.drop('Середня оцінка задоволення сусід�
 x = data.values #shape - 67,197
 
 #deviding for train and test data
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=5)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=5)
 classes =[]
 for i in y_train:
     if i not in classes:
@@ -31,24 +31,27 @@ def classification_of_labels(y):
         if i == 2.5:
             y_classes.append(1)
         elif i == 3.0:
-            y_classes.append(2)
+            y_classes.append(1)
         elif i == 3.5:
-            y_classes.append(3)
+            y_classes.append(2)
         elif i == 4.0:
-            y_classes.append(4)
+            y_classes.append(2)
         elif i == 4.5:
-            y_classes.append(5)
+            y_classes.append(3)
         else:
-            y_classes.append(6)
+            y_classes.append(3)
     return y_classes
 y_train_classes=classification_of_labels(y_train)
 y_test_classes=classification_of_labels(y_test)
+
 # print(y_train_classes, y_test_classes)
 
-neigh = KNeighborsClassifier(n_neighbors=6)
+neigh = KNeighborsClassifier(n_neighbors=3)
 neigh.fit(x_train, y_train_classes)
 y_pred = neigh.predict(x_test)
-print(metrics.accuracy_score(y_test_classes, y_pred))
+#print(metrics.accuracy_score(y_test_classes, y_pred))
+print(neigh.score(x_test, y_test_classes))
+# print(y_pred,y_test_classes)
 # for i in range(len(x_test)):
 #     y_pred1=neigh.predict(x_test[i])
 #     print(y_pred1,y_test_classes[i])
