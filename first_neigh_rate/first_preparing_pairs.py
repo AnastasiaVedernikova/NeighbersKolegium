@@ -1,7 +1,9 @@
 import pandas as pd
 
 #reading csv
-data = pd.read_csv("Сусідство.csv")
+data = pd.read_csv("Collegium.csv")
+outlier  = data.at[54, 'Електронна адреса']
+print(outlier)
 
 #creating ID column
 for i in range(len(data.index)):
@@ -67,19 +69,14 @@ def first_neighbor():
 
 first_neighbor()
 
+
 #calculating average level of satisfying living together
-def average_level_of_satisfying():
-    general_levels_of_satisfying = []
-    for i in range(len(data)):
-        sum=0
-        sum+=(list(data['Оцініть ваш рівень задоволення життя разом з ними '])[i])
-        sum+=(list(data['Оцініть ваш рівень задоволення життя разом з ними _Сусід_1'])[i])
-        general_levels_of_satisfying.append(sum/2)
-    data['Середня оцінка задоволення сусідом'] = general_levels_of_satisfying
-average_level_of_satisfying()
+def level_of_satisfying():
+    print((list(data['Оцініть ваш рівень задоволення життя разом з ними '])))
+    data['Oцінка задоволення сусідом'] = (list(data['Оцініть ваш рівень задоволення життя разом з ними ']))
+level_of_satisfying()
 
 #deleting ID, Number of room, Level of satisfying for each
-
 to_del = ["ID","Вкажіть номер кімнати в гуртожитку","Оцініть ваш рівень задоволення життя разом з ними ","ID_Сусід_1","Вкажіть номер кімнати в гуртожитку_Сусід_1", "Оцініть ваш рівень задоволення життя разом з ними _Сусід_1"]
 for i in range(len(to_del)):
      data = data.drop(to_del[i],1)
@@ -88,7 +85,6 @@ for i in range(len(to_del)):
 dummies_columns=list(data.columns.values)[:-1]
 data = pd.get_dummies(data, columns=dummies_columns, drop_first=True)
 
-print(data.head())
-#Y - first column
-#X - all others
-data.to_csv('D:\MachineLearning\ProcessedKolegium.csv', encoding='utf-8', index=False)
+#print(data.head())
+
+data.to_csv('D:\MachineLearning\\first_neigh_rate\ProcessedCollegium.csv', encoding='utf-8', index=False)
