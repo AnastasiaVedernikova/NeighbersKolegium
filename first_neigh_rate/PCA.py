@@ -14,7 +14,8 @@ data = data[data['Oцінка задоволення сусідом'] != 1]
 data.to_csv('D:\MachineLearning\\first_neigh_rate\WithoutOneCollegium.csv', encoding='utf-8', index=False)
 
 
-data = pd.read_csv("WithoutOneCollegium.csv")
+# data = pd.read_csv("WithoutOneCollegium.csv")
+data = pd.read_csv("ProcessedCollegium.csv")
 y =  np.array(data['Oцінка задоволення сусідом'])
 data = data.drop('Oцінка задоволення сусідом',1)
 x = data.values

@@ -5,7 +5,9 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 
 #reading csv
-data = pd.read_csv("WithoutOneCollegium.csv")
+# data = pd.read_csv("WithoutOneCollegium.csv")
+
+data = pd.read_csv("ProcessedCollegium.csv")
 
 #creating X and Y
 y =  np.array(data['Oцінка задоволення сусідом'])
@@ -14,7 +16,7 @@ data = data.drop('Oцінка задоволення сусідом',1)
 x = data.values
 
 #deviding for train and test data
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=5)#, stratify=y
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=5)#, stratify=y
 
 neigh = KNeighborsClassifier(n_neighbors=5, algorithm='auto')
 neigh.fit(x_train, y_train)
