@@ -2,6 +2,7 @@ import pandas as pd
 
 #reading csv
 data = pd.read_csv("Collegium.csv")
+
 outlier  = data.at[54, 'Електронна адреса']
 print(outlier)
 
@@ -51,8 +52,16 @@ def first_neighbors_id():
 
 first_neighbors_id()
 
+
 #deleting rows that does not have a neighbor
 data = data[data.ID_Сусід_1 !=0]
+
+#cleaning religion
+a = [~ data['Релігія'].isin(["Християнство", "Іслам", "Юдаїзм", "Буддизм", "Атеїзм"])]
+ind=[8, 11, 63, 84, 87, 89]
+for i in ind:
+    data.at[i,'Релігія'] = "Інше"
+
 
 old_names_of_columns = list(data.columns.values)[1:-1]
 def first_neighbor():
@@ -80,11 +89,22 @@ level_of_satisfying()
 to_del = ["ID","Вкажіть номер кімнати в гуртожитку","Оцініть ваш рівень задоволення життя разом з ними ","ID_Сусід_1","Вкажіть номер кімнати в гуртожитку_Сусід_1", "Оцініть ваш рівень задоволення життя разом з ними _Сусід_1"]
 for i in range(len(to_del)):
      data = data.drop(to_del[i],1)
-
+#
+#
+# # a = [~ data['Релігія'].isin(["Християнство", "Іслам", "Юдаїзм", "Буддизм", "Атеїзм"])]
+# # ind=[8, 11, 63, 84, 87, 89]
+# # for i in ind:
+# #     data.at[i,'Релігія'] = "Інше"
+#
+# print(list(data.columns.values))
 #creating dummies values
 dummies_columns=list(data.columns.values)[:-1]
 data = pd.get_dummies(data, columns=dummies_columns, drop_first=True)
 
-#print(data.head())
+print(data.shape)
+data.to_csv('ProcessedCollegium.csv', encoding='utf-8', index=False)
 
-data.to_csv('D:\MachineLearning\\first_neigh_rate\ProcessedCollegium.csv', encoding='utf-8', index=False)
+data = pd.read_csv("ProcessedCollegium.csv")
+data = data[data['Oцінка задоволення сусідом'] != 1]
+print(data.shape)
+data.to_csv('WithoutOneCollegium.csv', encoding='utf-8', index=False)
