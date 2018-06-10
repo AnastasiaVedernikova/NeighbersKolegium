@@ -15,22 +15,22 @@ data.to_csv('SingleNeighbors.csv', encoding='utf-8', index=False)
 
 
 X = pd.read_csv("SingleNeighbors.csv")
-k15 = KMeans(n_clusters=15,  precompute_distances = True, random_state=0)
-k15.fit(X)
-k7 = KMeans(n_clusters=7, precompute_distances = True, random_state=0)
-k7.fit(X)
+# k15 = KMeans(n_clusters=15,  precompute_distances = True, random_state=0)
+# k15.fit(X)
+# k7 = KMeans(n_clusters=7, precompute_distances = True, random_state=0)
+# k7.fit(X)
 k3 = KMeans(n_clusters=3, precompute_distances = True, random_state=0)
 k3.fit(X)
-print(k15.labels_)
-print("============================")
-print(k7.labels_)
-print("=============================")
+# print(k15.labels_)
+# print("============================")
+# print(k7.labels_)
+# print("=============================")
 print(k3.labels_)
 print("==============================")
 
 result = pd.read_csv("Collegium.csv")
-result["k15"] = k15.labels_
-result["k7"] = k7.labels_
+# result["k15"] = k15.labels_
+# result["k7"] = k7.labels_
 result["k3"] = k3.labels_
 print(result.head())
 result.to_csv('WithKmeansFeatures.csv', encoding='utf-8', index=False)

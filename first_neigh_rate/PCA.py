@@ -6,6 +6,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
+import xgboost
 
 #deleting rate 1
 
@@ -32,21 +33,29 @@ test_pca = neigh_pca.transform(x_test)
 model = KNeighborsClassifier(n_neighbors=5, algorithm='auto')
 model.fit(train_pca, y_train)
 predicition = model.predict(test_pca)
+print("knn")
 print(model.score(test_pca, y_test))
 
 #LogisticRegression
 neigh = LogisticRegression()
 neigh.fit(train_pca, y_train)
+print("logistic")
 print(neigh.score(test_pca, y_test))
 
 #RandomForest
 clf = RandomForestClassifier(max_depth=2, random_state=0)
 clf.fit(train_pca, y_train)
+print("random")
 print(clf.score(test_pca, y_test))
 
 #LinearRegression
 regr = LinearRegression()
 regr.fit(train_pca, y_train)
+print("linear")
 print(regr.score(test_pca, y_test))
 
-
+#XGBoost classifier
+model = xgboost.XGBRegressor()
+model.fit(train_pca, y_train)
+print("xgboost")
+print(model.score(test_pca, y_test))

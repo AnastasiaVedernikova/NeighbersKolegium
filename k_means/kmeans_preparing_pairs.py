@@ -1,5 +1,5 @@
 import pandas as pd
-
+import dummies.create_dummies_for_pairs_dataframe
 #reading csv
 data = pd.read_csv("WithKmeansFeatures.csv")
 # outlier  = data.at[54, 'Електронна адреса']
@@ -54,6 +54,12 @@ first_neighbors_id()
 #deleting rows that does not have a neighbor
 data = data[data.ID_Сусід_1 !=0]
 
+#cleaning religion
+a = [~ data['Релігія'].isin(["Християнство", "Іслам", "Юдаїзм", "Буддизм", "Атеїзм"])]
+ind=[8, 11, 63, 84, 87, 89]
+for i in ind:
+    data.at[i,'Релігія'] = "Інше"
+
 old_names_of_columns = list(data.columns.values)[1:-1]
 def first_neighbor():
     #general filling for first neighbor
@@ -82,9 +88,14 @@ for i in range(len(to_del)):
      data = data.drop(to_del[i],1)
 
 #creating dummies values
-dummies_columns=list(data.columns.values)[:-1]
-data = pd.get_dummies(data, columns=dummies_columns, drop_first=True)
+# dummies_columns=list(data.columns.values)[:-1]
+new_data = data.drop(data.columns.values[-1],1)
 
-print(data.head())
+dummy_data = dummies.create_dummies_for_pairs_dataframe.create_dummies_for_pairs_dataframe(new_data)
+dummy_data['Oцінка задоволення сусідом'] = data['Oцінка задоволення сусідом']
+#data = pd.get_dummies(data, columns=dummies_columns, drop_first=True)
 
-data.to_csv('PairsWithKmeansFeatures.csv', encoding='utf-8', index=False)
+#print(data.head())
+
+dummy_data.to_csv('PairsWithKmeansFeatures.csv', encoding='utf-8', index=False)
+print(data.columns.values)
