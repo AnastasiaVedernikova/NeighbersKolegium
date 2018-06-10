@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.cluster import KMeans
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 import dummies.create_dummies
 
@@ -43,8 +43,8 @@ history_data = pd.read_csv("PairsWithKmeansFeatures.csv")
 y = np.array(history_data['Oцінка задоволення сусідом'])
 history_data = history_data.drop('Oцінка задоволення сусідом',1)
 x = history_data.values
-knn = KNeighborsClassifier(n_neighbors=5, algorithm='auto')
-knn.fit(x, y)
+rf = RandomForestClassifier(max_depth=2, random_state=0)
+rf.fit(x, y)
 
 def construct_user_dataframe(id_user, data):
     new_columns = []
@@ -56,7 +56,7 @@ def construct_user_dataframe(id_user, data):
     return data
 result = construct_user_dataframe(1, data)
 
-scores = knn.predict(result)
+scores = rf.predict(result)
 scores_with_ids = []
 for i in range(len(scores)):
     scores_with_ids.append([i, scores[i]])
